@@ -1,0 +1,8 @@
+[DEFAULT]
+server = ""
+port = 587
+username = ""
+password = ""
+
+from = ""
+to = ""
