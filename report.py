@@ -5,12 +5,16 @@ import smtplib
 from email.mime.text import MIMEText
 import configparser
 
+import os
+
+_path = os.path.dirname(os.path.realpath(__file__))
+
 def send_email(sender: str, subject: str, message: str):
     msg = MIMEText(message)
     msg['Subject'] = subject
 
     config = configparser.ConfigParser()
-    config.read('mailconfig.ini')
+    config.read(f'{_path}/mailconfig.ini')
     config_default = config['DEFAULT']
 
     msg['From'] = f'{sender} <{config_default["from"]}>'
@@ -20,7 +24,6 @@ def send_email(sender: str, subject: str, message: str):
         server.starttls()
         server.login(config_default['username'], config_default['password'])
         server.sendmail(msg['From'], msg['To'], msg.as_string())
-    
     
 if __name__ == '__main__':
     send_email('Tester', 'Mail Test', 'Test Content')

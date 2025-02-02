@@ -1,2 +1,3 @@
 dbconfig.ini
 mailconfig.ini
+__pycache__/**

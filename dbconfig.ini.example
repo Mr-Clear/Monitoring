@@ -1,0 +1,6 @@
+[DEFAULT]
+server = ""
+port = 3306
+username = ""
+password = ""
+database = "Monitoring"
