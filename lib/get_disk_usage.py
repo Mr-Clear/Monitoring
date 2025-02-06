@@ -16,7 +16,7 @@ class Disk:
     extra: str
 
 def get_disk_usage(host: str|None) -> List[Disk]|str:
-    command = ['df']
+    command = ['df', '-B1']
     if host:
         command = ['ssh', host] + command
     try:
