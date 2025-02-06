@@ -3,6 +3,7 @@
 import configparser
 import os
 import psycopg2
+import time
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -30,6 +31,8 @@ def _connect():
         port=int(config_default['port']),
         database=config_default['database']
     )
+    cur = conn.cursor()
+    cur.execute(f"SET TIMEZONE TO '{time.tzname[0]}'")
     return conn
 
 def set_values(data: List[DbData]):
