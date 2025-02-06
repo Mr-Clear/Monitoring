@@ -1,38 +1,156 @@
---
--- PostgreSQL database dump
---
+-- Drop table
 
--- Dumped from database version 17.2 (Debian 17.2-1.pgdg110+1)
--- Dumped by pg_dump version 17.2 (Debian 17.2-1.pgdg110+1)
+-- DROP TABLE monitoring.checks;
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+CREATE TABLE monitoring.checks (
+	id smallserial NOT NULL,
+	value_id int2 NOT NULL,
+	"check" varchar NOT NULL,
+	arguments varchar NULL,
+	patience interval NOT NULL,
+	fail_message text NULL,
+	repeat interval NOT NULL,
+	CONSTRAINT checks_pk PRIMARY KEY (id),
+	CONSTRAINT checks_value_definition_fk FOREIGN KEY (value_id) REFERENCES monitoring.value_definition(id)
+);
 
---
--- Name: monitoring; Type: SCHEMA; Schema: -; Owner: postgres
---
+-- Permissions
 
-CREATE SCHEMA monitoring;
+ALTER TABLE monitoring.checks OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.checks TO postgres;
 
+-- Drop table
 
-ALTER SCHEMA monitoring OWNER TO postgres;
+-- DROP TABLE monitoring.checks_status;
 
---
--- Name: set_value(character varying, character varying, timestamp without time zone, text, text); Type: PROCEDURE; Schema: monitoring; Owner: postgres
---
+CREATE TABLE monitoring.checks_status (
+	check_id int2 NOT NULL,
+	last_check timestamp NOT NULL,
+	is_good bool NULL,
+	status_since timestamp NOT NULL,
+	message text NULL,
+	last_mail timestamp NULL,
+	CONSTRAINT checks_status_pk PRIMARY KEY (check_id)
+);
 
-CREATE PROCEDURE monitoring.set_value(IN host_in character varying, IN key_in character varying, IN time_in timestamp without time zone, IN value_in text, IN extra_in text)
-    LANGUAGE plpgsql
-    AS $$
+-- Permissions
+
+ALTER TABLE monitoring.checks_status OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.checks_status TO postgres;
+GRANT INSERT, SELECT, UPDATE ON TABLE monitoring.checks_status TO monitoring;
+
+-- Drop table
+
+-- DROP TABLE monitoring.current_values;
+
+CREATE TABLE monitoring.current_values (
+	value_id int2 NOT NULL,
+	"time" timestamp NOT NULL,
+	value text NULL,
+	extra text NULL,
+	CONSTRAINT newtable_pk PRIMARY KEY (value_id),
+	CONSTRAINT status_values_fk FOREIGN KEY (value_id) REFERENCES monitoring.value_definition(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Permissions
+
+ALTER TABLE monitoring.current_values OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.current_values TO postgres;
+GRANT INSERT, SELECT, UPDATE ON TABLE monitoring.current_values TO monitoring;
+
+-- Drop table
+
+-- DROP TABLE monitoring.history;
+
+CREATE TABLE monitoring.history (
+	id int4 DEFAULT nextval('monitoring.status_id_seq'::regclass) NOT NULL,
+	value_id int2 NOT NULL,
+	"time" timestamp NOT NULL,
+	value text NULL,
+	extra text NULL,
+	"valid" bool DEFAULT true NOT NULL,
+	CONSTRAINT status_pk PRIMARY KEY (id),
+	CONSTRAINT status_values_fk FOREIGN KEY (value_id) REFERENCES monitoring.value_definition(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Permissions
+
+ALTER TABLE monitoring.history OWNER TO postgres;
+GRANT INSERT, SELECT ON TABLE monitoring.history TO monitoring;
+
+-- Drop table
+
+-- DROP TABLE monitoring.value_definition;
+
+CREATE TABLE monitoring.value_definition (
+	id int2 DEFAULT nextval('monitoring.values_id_seq'::regclass) NOT NULL,
+	host varchar NOT NULL,
+	"key" varchar NOT NULL,
+	CONSTRAINT values_pk PRIMARY KEY (id),
+	CONSTRAINT values_unique UNIQUE (host, key)
+);
+
+-- Permissions
+
+ALTER TABLE monitoring.value_definition OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.value_definition TO postgres;
+GRANT INSERT, SELECT ON TABLE monitoring.value_definition TO monitoring;
+
+CREATE OR REPLACE VIEW monitoring.checks_overview
+AS SELECT c.id,
+    vd.host,
+    vd.key,
+    cv.value,
+    cv.extra,
+    cv."time" AS value_time,
+    now() - cv."time"::timestamp with time zone AS value_age,
+    c."check",
+    c.arguments,
+    c.patience,
+    c.fail_message,
+    c.repeat,
+    cs.is_good,
+    cs.status_since,
+    cs.message,
+    cs.last_check,
+    cs.last_mail
+   FROM monitoring.value_definition vd
+     LEFT JOIN monitoring.current_values cv ON cv.value_id = vd.id,
+    monitoring.checks c
+     LEFT JOIN monitoring.checks_status cs ON cs.check_id = c.id
+  WHERE c.value_id = vd.id;
+
+-- Permissions
+
+ALTER TABLE monitoring.checks_overview OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.checks_overview TO postgres;
+GRANT SELECT ON TABLE monitoring.checks_overview TO monitoring;
+
+CREATE OR REPLACE VIEW monitoring.values_overview
+AS SELECT v.id,
+    v.host,
+    v.key,
+    s."time",
+    now() - s."time"::timestamp with time zone AS age,
+    s.value,
+    s.extra,
+    s.value IS NOT NULL AS is_valid
+   FROM monitoring.value_definition v,
+    monitoring.current_values s
+  WHERE v.id = s.value_id
+  ORDER BY v.host, v.key;
+
+-- Permissions
+
+ALTER TABLE monitoring.values_overview OWNER TO postgres;
+GRANT ALL ON TABLE monitoring.values_overview TO postgres;
+GRANT SELECT ON TABLE monitoring.values_overview TO monitoring;
+
+-- DROP PROCEDURE monitoring.set_value(varchar, varchar, timestamp, text, text);
+
+CREATE OR REPLACE PROCEDURE monitoring.set_value(IN host_in character varying, IN key_in character varying, IN time_in timestamp without time zone, IN value_in text, IN extra_in text)
+ LANGUAGE plpgsql
+AS $procedure$
 	DECLARE
 		value_id_var SMALLINT;
 		is_valid BOOLEAN := value_in IS NOT NULL;
@@ -44,224 +162,23 @@ CREATE PROCEDURE monitoring.set_value(IN host_in character varying, IN key_in ch
 			time_var = time_in;
 		END IF;
 
-		INSERT INTO monitoring.monitoring.values (host, key) VALUES(host_in, key_in) ON CONFLICT DO NOTHING;
-		SELECT id FROM monitoring.monitoring."values" v WHERE host = host_in AND key = key_in INTO value_id_var;
+		SELECT id FROM monitoring.monitoring.value_definition v WHERE host = host_in AND key = key_in INTO value_id_var;
+		IF value_id_var IS NULL THEN
+			INSERT INTO monitoring.monitoring.value_definition (host, key) VALUES(host_in, key_in) ON CONFLICT DO NOTHING RETURNING id INTO value_id_var;
+		END IF;
 
 		INSERT INTO monitoring.monitoring.history(value_id, time, value, extra, valid) VALUES (value_id_var, time_var, value_in, extra_in, is_valid);
 
-		INSERT INTO monitoring.monitoring.status(value_id, time, value, extra) VALUES(value_id_var, time_var, value_in, extra_in)
+		INSERT INTO monitoring.monitoring.current_values(value_id, time, value, extra) VALUES(value_id_var, time_var, value_in, extra_in)
 			ON CONFLICT (value_id) DO UPDATE
 				SET time = excluded.time, value = excluded.value, extra = excluded.extra;
 	END;
-$$;
-
-
-ALTER PROCEDURE monitoring.set_value(IN host_in character varying, IN key_in character varying, IN time_in timestamp without time zone, IN value_in text, IN extra_in text) OWNER TO postgres;
-
-SET default_tablespace = '';
-
-SET default_table_access_method = heap;
-
---
--- Name: history; Type: TABLE; Schema: monitoring; Owner: postgres
---
-
-CREATE TABLE monitoring.history (
-    id integer NOT NULL,
-    value_id smallint NOT NULL,
-    "time" timestamp without time zone NOT NULL,
-    value text,
-    extra text,
-    valid boolean DEFAULT true NOT NULL
-);
-
-
-ALTER TABLE monitoring.history OWNER TO postgres;
-
---
--- Name: status; Type: TABLE; Schema: monitoring; Owner: postgres
---
-
-CREATE TABLE monitoring.status (
-    value_id smallint NOT NULL,
-    "time" timestamp without time zone NOT NULL,
-    value text,
-    extra text
-);
-
-
-ALTER TABLE monitoring.status OWNER TO postgres;
-
---
--- Name: status_id_seq; Type: SEQUENCE; Schema: monitoring; Owner: postgres
---
-
-CREATE SEQUENCE monitoring.status_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE monitoring.status_id_seq OWNER TO postgres;
-
---
--- Name: status_id_seq; Type: SEQUENCE OWNED BY; Schema: monitoring; Owner: postgres
---
-
-ALTER SEQUENCE monitoring.status_id_seq OWNED BY monitoring.history.id;
-
-
---
--- Name: values; Type: TABLE; Schema: monitoring; Owner: postgres
---
-
-CREATE TABLE monitoring."values" (
-    id smallint NOT NULL,
-    host character varying NOT NULL,
-    key character varying NOT NULL
-);
-
-
-ALTER TABLE monitoring."values" OWNER TO postgres;
-
---
--- Name: values_id_seq; Type: SEQUENCE; Schema: monitoring; Owner: postgres
---
-
-CREATE SEQUENCE monitoring.values_id_seq
-    AS smallint
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE monitoring.values_id_seq OWNER TO postgres;
-
---
--- Name: values_id_seq; Type: SEQUENCE OWNED BY; Schema: monitoring; Owner: postgres
---
-
-ALTER SEQUENCE monitoring.values_id_seq OWNED BY monitoring."values".id;
-
-
---
--- Name: history id; Type: DEFAULT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring.history ALTER COLUMN id SET DEFAULT nextval('monitoring.status_id_seq'::regclass);
-
-
---
--- Name: values id; Type: DEFAULT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring."values" ALTER COLUMN id SET DEFAULT nextval('monitoring.values_id_seq'::regclass);
-
-
---
--- Name: status newtable_pk; Type: CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring.status
-    ADD CONSTRAINT newtable_pk PRIMARY KEY (value_id);
-
-
---
--- Name: history status_pk; Type: CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring.history
-    ADD CONSTRAINT status_pk PRIMARY KEY (id);
-
-
---
--- Name: values values_pk; Type: CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring."values"
-    ADD CONSTRAINT values_pk PRIMARY KEY (id);
-
-
---
--- Name: values values_unique; Type: CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring."values"
-    ADD CONSTRAINT values_unique UNIQUE (host, key);
-
-
---
--- Name: status status_values_fk; Type: FK CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring.status
-    ADD CONSTRAINT status_values_fk FOREIGN KEY (value_id) REFERENCES monitoring."values"(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: history status_values_fk; Type: FK CONSTRAINT; Schema: monitoring; Owner: postgres
---
-
-ALTER TABLE ONLY monitoring.history
-    ADD CONSTRAINT status_values_fk FOREIGN KEY (value_id) REFERENCES monitoring."values"(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: SCHEMA monitoring; Type: ACL; Schema: -; Owner: postgres
---
-
-GRANT USAGE ON SCHEMA monitoring TO monitoring;
-
-
---
--- Name: PROCEDURE set_value(IN host_in character varying, IN key_in character varying, IN time_in timestamp without time zone, IN value_in text, IN extra_in text); Type: ACL; Schema: monitoring; Owner: postgres
---
-
-GRANT ALL ON PROCEDURE monitoring.set_value(IN host_in character varying, IN key_in character varying, IN time_in timestamp without time zone, IN value_in text, IN extra_in text) TO monitoring;
-
-
---
--- Name: TABLE history; Type: ACL; Schema: monitoring; Owner: postgres
---
-
-REVOKE ALL ON TABLE monitoring.history FROM postgres;
-GRANT SELECT,INSERT ON TABLE monitoring.history TO monitoring;
-
-
---
--- Name: TABLE status; Type: ACL; Schema: monitoring; Owner: postgres
---
-
-GRANT SELECT,INSERT,UPDATE ON TABLE monitoring.status TO monitoring;
-
-
---
--- Name: SEQUENCE status_id_seq; Type: ACL; Schema: monitoring; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE monitoring.status_id_seq TO monitoring;
-
-
---
--- Name: TABLE "values"; Type: ACL; Schema: monitoring; Owner: postgres
---
-
-GRANT SELECT,INSERT ON TABLE monitoring."values" TO monitoring;
-
-
---
--- Name: SEQUENCE values_id_seq; Type: ACL; Schema: monitoring; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE monitoring.values_id_seq TO monitoring;
-
-
---
--- PostgreSQL database dump complete
---
-
+$procedure$
+;
+
+-- Permissions
+
+ALTER PROCEDURE monitoring.set_value(varchar, varchar, timestamp, text, text) OWNER TO postgres;
+GRANT ALL ON PROCEDURE monitoring.set_value(varchar, varchar, timestamp, text, text) TO public;
+GRANT ALL ON PROCEDURE monitoring.set_value(varchar, varchar, timestamp, text, text) TO postgres;
+GRANT ALL ON PROCEDURE monitoring.set_value(varchar, varchar, timestamp, text, text) TO monitoring;
