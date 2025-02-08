@@ -12,6 +12,11 @@ import re
 
 from datetime import datetime, timedelta
 
+def set_and_check_status(check: db.CheckStatus, operator: str, actual_value, check_value):
+    is_good = compare(actual_value, check_value, operator)
+    if is_good is not None:
+        set_status(check, is_good, actual_value)
+
 def set_status(check: db.CheckStatus, is_good: bool, actual):
     now = datetime.now()
     last_mail = check.last_mail
@@ -157,9 +162,7 @@ def disk_space(check: db.CheckStatus):
                     send_email('Monitoring Engine', f'Unknown value name: "{value_name}"', str(check))
                     return
     
-    is_good = compare(actual, number, operator)
-    if is_good is not None:
-        set_status(check, is_good, actual)
+    set_and_check_status(check, operator, actual, number)
 
 def number(check: db.CheckStatus):
     regex = re.compile(r'^(!?[<>]?=?) ([\d.]+)$')
@@ -169,10 +172,25 @@ def number(check: db.CheckStatus):
         send_email('Monitoring Engine', f'Invalid value for number check: "{check.check}"', str(check))
         return
 
-    number = float(match[2])
-    is_good = compare(check.value, number, match[1])
-    if is_good is not None:
-        set_status(check, is_good, number)
+    set_and_check_status(check, match[1], check.value, float(match[2]))
+
+def value_age(check: db.CheckStatus):
+    regex = re.compile(r'^(!?[<>]?=?) ((\d+)y)?((\d+)M)?((\d+)w)?((\d+)d)?((\d+)h)?((\d+)m)?((\d+)s)$')
+    match = regex.match(check.arguments)
+    if not match:
+        print(f"Invalid argument for time delta check: '{check.arguments}'", file=sys.stderr)
+        send_email('Monitoring Engine', f'Invalid argument for time delta check: "{check.check}"', str(check))
+        return
+    years = int(match[3]) if match[3] else 0
+    months = int(match[5]) if match[5] else 0
+    weeks = int(match[7]) if match[7] else 0
+    days = int(match[9]) if match[9] else 0
+    hours = int(match[11]) if match[11] else 0
+    minutes = int(match[13]) if match[13] else 0
+    seconds = int(match[15]) if match[15] else 0
+    td = timedelta(days=years*365 + months*30 + weeks*7 + days, hours=hours, minutes=minutes, seconds=seconds)
+
+    set_and_check_status(check, match[1], check.value_age, td)
 
 if __name__ == "__main__":
     for check in db.get_checks():
