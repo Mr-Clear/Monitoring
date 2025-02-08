@@ -40,9 +40,13 @@ class CheckStatus:
     last_mail: datetime | None
 
     def __str__(self):
-        r = "Status:"
+        r = ''""''
+        if self.extra:
+            r += f'{self.extra}\n\n'
+        r += 'Status:'
         for k, v in self.__dict__.items():
-            r += f"\n\t{k}: {v}"
+            val = str(v).replace('\n', f'\n\t  {" " * len(k)}').strip()
+            r += f'\n\t{k}: {val}'
         return r
 
 _path = os.path.dirname(os.path.realpath(__file__))
