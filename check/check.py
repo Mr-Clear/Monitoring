@@ -164,6 +164,44 @@ def disk_space(check: db.CheckStatus):
     
     set_and_check_status(check, operator, actual, number)
 
+def loadavg(check: db.CheckStatus):
+    arg_regex = re.compile(r'^((1min)|(5min)|(15min)|(running)|(total)|(pid)) (!?[<>]?=?) ([\d.]+)$')
+    arg_match = arg_regex.match(check.arguments)
+    if not arg_match:
+        print(f"Invalid argument for loadavg check: '{check.arguments}'", file=sys.stderr)
+        send_email('Monitoring Engine', f'Invalid value for loadavg check: "{check.check}"', str(check))
+        return
+    arg_type = arg_match[1]
+    arg_operator = arg_match[8]
+    arg_value = float(arg_match[9])
+
+    val_regex = re.compile(r'^([\d.]+) ([\d.]+) ([\d.]+) (\d+)/(\d+) (\d+)$')
+    val_match = val_regex.match(check.value)
+    if not val_match:
+        print(f"Invalid value for loadavg check: '{check.value}'", file=sys.stderr)
+        send_email('Monitoring Engine', f'Invalid value for loadavg check: "{check.check}"', str(check))
+        return
+
+    match (arg_type):
+        case '1min':
+            actual = float(val_match[1])
+        case '5min':
+            actual = float(val_match[2])
+        case '15min':
+            actual = float(val_match[3])
+        case 'running':
+            actual = int(val_match[4])
+        case 'total':
+            actual = int(val_match[5])
+        case 'pid':
+            actual = int(val_match[6])
+        case _:
+            print(f"Unknown argument for loadavg check: '{arg_type}'", file=sys.stderr)
+            send_email('Monitoring Engine', f'Unknown argument for loadavg check: "{check.check}"', str(check))
+            return
+
+    set_and_check_status(check, arg_operator, actual, arg_value)
+
 def number(check: db.CheckStatus):
     regex = re.compile(r'^(!?[<>]?=?) ([\d.]+)$')
     match = regex.match(check.arguments)
@@ -175,7 +213,7 @@ def number(check: db.CheckStatus):
     set_and_check_status(check, match[1], check.value, float(match[2]))
 
 def value_age(check: db.CheckStatus):
-    regex = re.compile(r'^(!?[<>]?=?) ((\d+)y)?((\d+)M)?((\d+)w)?((\d+)d)?((\d+)h)?((\d+)m)?((\d+)s)$')
+    regex = re.compile(r'^(!?[<>]?=?) ((\d+)y)?((\d+)M)?((\d+)w)?((\d+)d)?((\d+)h)?((\d+)m)?((\d+)s)?$')
     match = regex.match(check.arguments)
     if not match:
         print(f"Invalid argument for time delta check: '{check.arguments}'", file=sys.stderr)
@@ -202,8 +240,10 @@ if __name__ == "__main__":
                 number(check)
             case 'disk_space':
                 disk_space(check)
+            case 'loadavg':
+                loadavg(check)
             case 'value_age':
-                pass
+                value_age(check)
             case _:
                 print(f"Unknown check: '{check.check}'", file=sys.stderr)
                 send_email('Monitoring Engine', f'Unknown check: "{check.check}"', str(check))

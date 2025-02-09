@@ -1,4 +1,4 @@
-#!/home/user/monitoring/venv/bin/python
+#!/home/user/Monitoring/venv/bin/python
 
 import os
 import sys
