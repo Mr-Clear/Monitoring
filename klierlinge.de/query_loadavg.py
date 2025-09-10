@@ -8,5 +8,5 @@ sys.path.append(parent_dir_name + "/lib")
 import get_loadavg
 from db import set_values
 
-ussage = get_loadavg.query_loadavg({'www.klierlinge.de': ['/', '/media/storage'], 'mail.klierlinge.de': ['/', '/mnt/HC_Volume_16021708']})
+ussage = get_loadavg.query_loadavg(['www.klierlinge.de', 'mail.klierlinge.de'])
 set_values(ussage)
