@@ -9,7 +9,7 @@ import db
 from email_report import send_email
 
 import re
-
+import traceback
 from datetime import datetime, timedelta
 
 def set_and_check_status(check: db.CheckStatus, operator: str, actual_value, check_value):
@@ -50,7 +50,7 @@ def set_status(check: db.CheckStatus, is_good: bool, actual):
                                         repeat=check.repeat,
                                         is_good=check.is_good,
                                         check_status_since=check.check_status_since,
-                                        check_status_since_duration=now-check.check_status_since,
+                                        check_status_since_duration=now-check.check_status_since if check.check_status_since else None, 
                                         check_message=check.check_message,
                                         last_check=check.last_check,
                                         last_mail=check.last_mail
@@ -233,17 +233,22 @@ def value_age(check: db.CheckStatus):
 if __name__ == "__main__":
     for check in db.get_checks():
         id = check.id
-        match (check.check):
-            case '':
-                db.set_check_status(0, datetime.now(), True, check.check_status_since if check.check_status_since else datetime.now(), None, None)
-            case 'number':
-                number(check)
-            case 'disk_space':
-                disk_space(check)
-            case 'loadavg':
-                loadavg(check)
-            case 'value_age':
-                value_age(check)
-            case _:
-                print(f"Unknown check: '{check.check}'", file=sys.stderr)
-                send_email('Monitoring Engine', f'Unknown check: "{check.check}"', str(check))
+        try:
+            match (check.check):
+                case '':
+                    db.set_check_status(0, datetime.now(), True, check.check_status_since if check.check_status_since else datetime.now(), None, None)
+                case 'number':
+                    number(check)
+                case 'disk_space':
+                    disk_space(check)
+                case 'loadavg':
+                    loadavg(check)
+                case 'value_age':
+                    value_age(check)
+                case _:
+                    print(f"Unknown check: '{check.check}'", file=sys.stderr)
+                    send_email('Monitoring Engine', f'Unknown check: "{check.check}"', str(check))
+        except Exception as e:
+            print(f"Error in check {id} {check.check} {check.arguments}: {e}", file=sys.stderr)
+            send_email('Monitoring Engine', f'Error in check {id} {check.check} {check.arguments}',
+                       f'{check}\n\n{e}\n{traceback.format_exc()}')

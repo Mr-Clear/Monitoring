@@ -1,0 +1,564 @@
+#!/usr/bin/env python3
+
+# Utility for checking for new versions of docker services, in a few
+# different ways. Depends on `docker` and `skopeo` executables; no python
+# dependencies.
+
+# based on https://gist.github.com/TyIsI/ba1707286ddb7a2bd1547cde8c2dd667
+# This code is available under the MIT license: https://opensource.org/licenses/MIT
+
+from pathlib import Path
+import subprocess, os, sys
+import json
+import logging
+import argparse
+import itertools
+from itertools import zip_longest
+import re
+import time
+from dataclasses import dataclass, field
+
+import textwrap
+from typing import Callable, List, Optional, Sequence
+
+from pprint import pp
+
+from datetime import datetime
+
+# sentinel for comparison only
+STDOUT=object()
+
+# start gist block
+# https://gist.github.com/laundmo/2e2f7314570d2f86a4af8df4b1812b63
+def text_width(text: str) -> int:
+    return len(max(text.split("\n"), key=len))
+
+def max_text_width(texts: List[str]) -> int:
+    return len(max(texts, key=text_width))
+
+def format_table(
+    table: Sequence[Sequence[str]],
+    headers: Optional[Sequence[str]] = None,
+    justify: Callable[[str, int], str] = str.ljust,
+    max_width: int = 20,
+) -> str:
+    if headers is None:
+        headers = [""] * len(table)
+
+    col_lens = [
+        min(max_width, max_text_width([headers[i]] + list(col)))
+        for i, col in enumerate(table)
+    ]
+    output = ""
+    if max(headers, key=len) != "":
+        output += (
+            " | ".join(justify(item, col_lens[i]) for i, item in enumerate(headers))
+            + "\n"
+        )
+        output += " | ".join("-" * col_lens[i] for i, _ in enumerate(table)) + "\n"
+
+    for row in zip(*table):
+        justified = [justify(item, col_lens[i]) for i, item in enumerate(row)]
+        wrapped = [textwrap.wrap(i, width=max_width) for i in justified]
+        for line_elems in zip_longest(*wrapped, fillvalue=""):
+            output += (
+                " | ".join(
+                    justify(item, col_lens[i]) for i, item in enumerate(line_elems)
+                )
+                + "\n"
+            )
+
+    return output
+# end gist block
+
+@dataclass
+class Service:
+    service_hash: str
+    service_name: str
+    project: str
+    service: str
+    image: str
+    repo_digest: str
+    remote_repo_digest: str
+    biggest_tag: str
+    link: str
+    link_for_pull: str
+    checked_at: str
+
+    @staticmethod
+    def headers():
+        return [
+            "name",
+            "stack",
+            "service",
+            "image",
+            "pull",
+            "tag",
+            "link",
+        ]
+
+    @property
+    def as_table_row(self):
+        return [
+            self.service_name,
+            self.project,
+            self.service,
+            self.image,
+            self.has_new_image_for_tag,
+            self.biggest_tag if self.has_new_tag else self.has_new_tag,
+            self.link if self.has_new_tag else (self.link_for_pull if self.has_new_image_for_tag else None)
+        ]
+
+    def as_output_dict(self, include_checked_at):
+        if include_checked_at:
+            return dict(zip(
+                Service.headers() + ["checked_at"],
+                self.as_table_row + [self.checked_at]
+            ))
+        else:
+            return dict(zip(Service.headers(), self.as_table_row))
+
+    # these properties are deliberately nullable, with null representing an
+    # indeterminate state
+    @property
+    def has_new_tag(self):
+        if self.image and self.biggest_tag:
+            try:
+                local = self.image.rsplit(":", 2)[1]
+                parsed_remote = version_string_to_semver_tuple(self.biggest_tag)
+                parsed_local = version_string_to_semver_tuple(local)
+                if parsed_remote and parsed_local:
+                    return parsed_remote > parsed_local
+                else:
+                    # hamfisted; parse didn't work so revert to pure lexical
+                    return self.biggest_tag > local
+            except:
+                return None
+        return None
+
+    # returns false if tags are the same, true if not the same, and null if one
+    # or both of the args are null
+    def compare_tags(self, lhs, rhs):
+        if lhs and rhs:
+            return lhs != rhs
+        else:
+            return None
+
+    @property
+    def has_new_image_for_tag(self):
+        return self.compare_tags(self.repo_digest, self.remote_repo_digest)
+
+
+def go_formatstr(input_dict, modifier=None):
+    if modifier:
+        return "{" + ",".join([ "\"%s\":{{%s %s}}" % (k, modifier, v) for (k,v) in input_dict.items() ]) + "}"
+    else:
+        return "{" + ",".join([ "\"%s\":{{%s}}" % i for i in input_dict.items() ]) + "}"
+
+def run_get(argv):
+    log.debug("Running command: %s" % ' '.join(argv))
+    res = subprocess.check_output(['ssh', 'www.klierlinge.de'] + argv, text=True).strip()
+    log.debug(res)
+    return res
+
+
+def grouped(iterable, key=None):
+    return itertools.groupby(sorted(iterable, key=key), key)
+
+semver_regex = re.compile("^v?([0-9]+)\.([0-9]+)(?:\.([0-9]+))?(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?")
+numbers_regex = re.compile("^[0-9]+$")
+def version_string_to_semver_tuple(version):
+    res = semver_regex.search(version)
+    if res:
+        (a,b,c,d) = res.groups()
+        try:
+            # cast to int so numeric comparison works, also treat missing tag
+            # numbers as 0
+            #  7.0 -> 7.0.0
+            a = int(a) if a else 0
+            b = int(b) if b else 0
+            c = int(c) if c else 0
+        except:
+            return None
+
+        return (a, b, c, d if d else 'zzzzzzzzzzz')
+    return None
+
+def trueish(val):
+    tst = str(val).lower()
+    if tst in ["true", "t", "1", "y", "yes"]:
+        return True
+    if tst in ["false", "f", "0", "n", "no"]:
+        return False
+    return None
+
+def parse_tag(tag, include, exclude, numeric_groups=True):
+    m = None
+    if exclude and exclude.match(tag):
+        return None
+    if include:
+        m = include.match(tag)
+        if not m:
+            return None
+        else:
+            if m.groupdict():
+                parsed = [x[1] for x in sorted(m.groupdict().items())]
+            elif m.groups():
+                parsed = list(m.groups())
+            else:
+                parsed = [tag]
+    else:
+        parsed = [tag]
+
+    if numeric_groups:
+        parsed = [ int(x) if numbers_regex.match(x) else x for x in parsed ]
+    return {
+        'raw': tag,
+        'parsed': parsed,
+        'match': m,
+    }
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description = """
+    A utility for inspecting docker swarm stacks against their source image
+    hashes and tags, and determining what needs updates.
+
+    This tool can also be controlled with per-service labels:
+        dur.enabled=false
+            Do not monitor this service
+        dur.tags.include=<regex>
+            Filter remote tag list down to only tags matching this regex
+        dur.tags.exclude=<regex>
+            Reject remote tags matching this regex
+        dur.tags.parse_numeric=false
+            Turn off numeric parsing of tags (if sorting tags breaks for a container
+        dur.link.template=<replacement>
+            URL to attach to this container's output. If an include regex is
+            used globally or for this container, then replacements provided in this
+            string will be applied according to the capture groups from the newest tag.
+            Use \\1, \\2, etc for numbered capture groups and \g<name> for named
+            capture groups.
+    """
+    )
+
+    parser.add_argument("service_ids", nargs="*",
+                            help="restrict tool to only these service ids")
+
+    parser.add_argument("-d", "--delay", type=int, help="delay in seconds between service inspections")
+    parser.add_argument("-f", "--failure-delay", metavar="DELAY", type=int, default=500,
+                            help="delay after encountering a docker rate limit [500s]")
+    parser.add_argument("-m", "--max-attempts", metavar="N", type=int, default=1, help="Fail after this many errors")
+    parser.add_argument("-v", "--verbose", action="count", default=0, help="more logging (or -vv, etc)")
+    parser.add_argument("-q", "--quiet", action="count", default=0, help="less logging")
+    # this is storing as an array, not sure why and not sure it's worth figuring out
+    parser.add_argument("-c", "--repo-credentials", metavar="PATH", help="""
+                            a file containing credentials for use with `docker
+                            login` in the format of `user:password` (only the first
+                            line will be read)""")
+
+    parser.add_argument("-i", "--include-tags", metavar="REGEX", help="""
+                            only tags matching this regex will be considered.
+                            This can be overridden per-service with the label
+                            'dur.tags.include'. If this regex has capture
+                            groups, they will be used to sort the tags. If named
+                            capture groups are used, the sort will be in
+                            alphabetical order""")
+    parser.add_argument("-e", "--exclude-tags", metavar="REGEX", help="""
+                            only tags matching this regex will be considered.
+                            This can be overridden per-service with the label
+                            'dur.tags.exclude'""")
+    parser.add_argument("-n", "--no-parse-numerics", action="store_true",
+                            help="don't attempt to parse numeric tag parts")
+    parser.add_argument("-l", "--ignore-labels", action="store_true",
+                            help="ignore container labels, only use command line options")
+    parser.add_argument("-k", "--link-template", metavar="STR",
+                            help="template for creating links from tag matches. Override with container label 'dur.link.template'")
+
+    parser.add_argument("--table", metavar="PATH", nargs='?', const=STDOUT,
+                            help="output results as table, to either STDOUT or a provided path")
+    parser.add_argument("--table-max-width", metavar="N", type=int, default=50,
+                            help="max width of table columns [50]")
+    parser.add_argument("--json", metavar="PATH", nargs='?', const=STDOUT, default=False,
+                            help="output results as json, to either STDOUT or a provided path")
+    parser.add_argument("--json-timestamps", action="store_true",
+                            help="add a `checked_at` timestamp field to each row of json output")
+    args = parser.parse_args()
+
+
+    # verify that some output is requested
+    if not (args.json or args.table):
+        print("Error: no output requested. Use at least one of --table, --json", file=sys.stderr)
+        parser.print_help(sys.stderr)
+        exit(1)
+
+
+    # verify dependencies
+    missing_dependencies = []
+    if subprocess.run(['ssh', 'www.klierlinge.de', "docker", "info"], capture_output=True).returncode > 0:
+        missing_dependencies.append("Error: docker not installed or missing permissions")
+    if subprocess.run(['ssh', 'www.klierlinge.de', "skopeo", "--version"], capture_output=True).returncode > 0:
+        missing_dependencies.append("Error: skopeo not installed")
+    if len(missing_dependencies):
+        [print(m, file=sys.stderr) for m in missing_dependencies]
+        exit(1)
+
+
+    logging.basicConfig(format='%(asctime)s %(levelname)s: %(message)s', level=(max(3-(args.verbose-args.quiet), 1) * 10))
+    log = logging.getLogger(__name__)
+
+    checked_at = datetime.now().isoformat()
+
+    if args.repo_credentials:
+        log.debug("Authenticating with docker hub...")
+        with open(args.repo_credentials, 'r') as f:
+            (user, password) = f.readline().strip().split(":", 2)
+            if not user and password:
+                print("Error: Couldn't read credentials from %s" % args.repo_credentials, file=sys.stderr)
+                exit(1)
+
+        login = subprocess.run(['ssh', 'www.klierlinge.de', "docker", "login", "-u", user, "-p", password], capture_output=True)
+        if login.returncode > 0:
+            print("Error: Couldn't log into docker hub using provided credentials")
+            exit(1)
+        log.debug("Authenticated")
+
+    if args.service_ids:
+        service_hashes = args.service_ids
+    else:
+        log.info("Getting list of running services...")
+        service_hashes = run_get(["docker", "service", "ls", "-q"]).split("\n")
+
+    global_include_tags = re.compile(args.include_tags) if args.include_tags else None
+    global_exclude_tags = re.compile(args.exclude_tags) if args.exclude_tags else None
+
+    services: List[Service] = []
+
+    # this will be used to extract a structure out of docker inspect
+    inspect_templates = {
+        "id": ".ID",
+        "labels": ".Spec.Labels",
+        "name": ".Spec.Name",
+        # format: <repo-image>:<tag>@<digest-sha>
+        "image_spec": ".Spec.TaskTemplate.ContainerSpec.Image",
+    }
+
+    stack_labels = [
+        "image",
+        "namespace",
+    ]
+
+
+    # outer loop for retrying
+    for attempt in range(args.max_attempts):
+
+        already_seen = list(map(lambda x: x.service_hash, services))
+        to_inspect = [c for c in service_hashes if c not in already_seen]
+
+        # short circuit if we're done
+        if not to_inspect:
+            break
+
+        log.info("Inspecting %d running services" % len(to_inspect))
+        if len(already_seen):
+            log.info("Skipping %d services from previous efforts" % len(already_seen))
+
+        for service_hash in to_inspect:
+            inspect_res = json.loads(run_get(
+                ["docker", "service", "inspect", service_hash, "-f", go_formatstr(inspect_templates, "json")],
+            ))
+
+            # skip services tagged as not-enabled unless they're explicitly passed in on the cli
+            if not trueish(inspect_res['labels'].get('dur.enabled', "true")) and not service_hash in args.service_ids:
+                log.debug("Skipping disabled service: " + inspect_res['name'])
+                continue
+
+            extracted_labels = {}
+            for l in stack_labels:
+                labelname = "com.docker.stack.%s" % l
+                extracted_labels[l] = inspect_res['labels'].get(labelname)
+
+            # extract image name for later, handling sha-specified pins
+            image_name = re.sub(r"@sha256", "", extracted_labels['image'].split(":")[0])
+
+            # this may fail due to docker rate-limiting
+            skopeo_cmd = ['ssh', 'www.klierlinge.de', "skopeo", "inspect", "docker://%s" % extracted_labels['image']]
+            try:
+                skopeo_inspect_res = json.loads(run_get(skopeo_cmd))
+            except subprocess.CalledProcessError:
+                extra_failure_str = " (failure %d of %d)" % (attempt+1, args.max_attempts) if args.max_attempts > 1 else ""
+                log.warning("skopeo failure: `%s`%s" % (" ".join(skopeo_cmd), extra_failure_str))
+                if attempt+1 < args.max_attempts:
+                    log.info(f"Pausing {args.failure_delay}s after rate limit failure...")
+                    time.sleep(args.failure_delay)
+                break
+
+            image_spec_parts = inspect_res['image_spec'].split("@")
+            try:
+                repo_digest = image_spec_parts[1]
+            except:
+                repo_digest = None
+            try:
+                current_tag = image_spec_parts[0].split(":")[1]
+            except:
+                current_tag = None
+
+            remote_repo_digest = skopeo_inspect_res.get('Digest')
+
+            label_include_tags, label_exclude_tags, label_parse_numeric, label_link_template = (None, None, None, None)
+            if not args.ignore_labels:
+                label_include_tags = inspect_res.get('labels', {}).get("dur.tags.include")
+                label_exclude_tags = inspect_res.get('labels', {}).get("dur.tags.exclude")
+                label_parse_numeric = not trueish(inspect_res.get('labels', {}).get("dur.tags.parse_numeric"))
+                label_link_template = inspect_res.get('labels', {}).get("dur.link.template")
+
+            link_template = label_link_template if label_link_template else args.link_template
+            include_tags = re.compile(label_include_tags) if label_include_tags else global_include_tags
+            exclude_tags = re.compile(label_exclude_tags) if label_exclude_tags else global_exclude_tags
+            parse_numerics = label_parse_numeric if label_parse_numeric is not None else not args.no_parse_numerics
+            log.debug("Numeric parsing enabled: " + str(parse_numerics))
+
+            raw_parsed_tags = [ parse_tag(
+                tag,
+                include_tags,
+                exclude_tags,
+                parse_numerics,
+            ) for tag in skopeo_inspect_res.get('RepoTags', []) ]
+
+            parsed_tags = [ x for x in raw_parsed_tags if x is not None ]
+
+            try:
+                sorted_tags = sorted(
+                    parsed_tags,
+                    key=lambda x: (x['parsed'], len(x['raw'])),
+                    reverse = True
+                )
+
+                if log.getEffectiveLevel() <= logging.DEBUG:
+                    [
+                        log.debug("Found remote tag: %s:%s (parsed to %s)" % (
+                            image_name,
+                            st['raw'],
+                            repr(st['parsed']),
+                        ))
+                        for st in sorted_tags[::-1]
+                    ]
+
+                # TODO: extra step here- get the digest of the biggest tag and
+                # compare it to the current digest - don't report it as a new
+                # tag if they're the same
+                biggest_tag = sorted_tags[0]
+                biggest_tag_name = biggest_tag['raw']
+                if link_template:
+                    try:
+                        link = biggest_tag['match'].expand(link_template)
+                    except Exception as e:
+                        log.error("Error rendering link for '%s': %s" % (image_name, str(e)))
+                        link = None
+
+                    if include_tags:
+                        try:
+                            link_for_pull = include_tags.sub(current_tag, link_template)
+                        except Exception as e:
+                            log.error("Error rendering pull link for '%s': %s" % (image_name, str(e)))
+                            link_for_pull = link_template
+                    else:
+                        link_for_pull = link_template
+                else:
+                    link = None
+                    link_for_pull = None
+            except Exception as e:
+                log.error("Error sorting remote tags for '%s': %s" % (image_name, str(e)))
+                log.debug("Got these tags:")
+                [ log.debug("  " + repr(x)) for x in parsed_tags ]
+                biggest_tag_name = None
+                link = None
+                link_for_pull = None
+
+            # make sure we're not getting notice of updates to e.g. 7.0.1 when
+            # already on the latest 7.0 tag
+            if biggest_tag_name and biggest_tag_name != current_tag:
+                skopeo_cmd = ['ssh', 'www.klierlinge.de', "skopeo", "inspect", "docker://%s:%s" % (image_name, biggest_tag_name)]
+                try:
+                    skopeo_tag_inspect_res = json.loads(run_get(skopeo_cmd))
+                    biggest_tag_digest = skopeo_tag_inspect_res.get('Digest')
+                    if biggest_tag_digest == repo_digest:
+                        log.info("Saw tag %s for %s - same digest, ignoring..." % (biggest_tag_name, extracted_labels['image']))
+                        biggest_tag_name = None
+                except subprocess.CalledProcessError:
+                    extra_failure_str = " (failure %d of %d)" % (attempt+1, args.max_attempts) if args.max_attempts > 1 else ""
+                    log.warning("skopeo failure: `%s`%s" % (" ".join(skopeo_cmd), extra_failure_str))
+                    if attempt+1 < args.max_attempts:
+                        log.info(f"Pausing {args.failure_delay}s after rate limit failure...")
+                        time.sleep(args.failure_delay)
+                    break
+
+            shortname = inspect_res['name'][len(extracted_labels['namespace'])+1:] if 'namespace' in extracted_labels else None
+
+            c = Service(
+                service_hash,
+                inspect_res['name'],
+                extracted_labels.get("namespace"),
+                shortname,
+                extracted_labels['image'],
+                repo_digest,
+                remote_repo_digest,
+                biggest_tag_name,
+                link,
+                link_for_pull,
+                checked_at,
+            )
+            services.append(c)
+            log.info("Processed %s (%s)" % (c.service_name, c.image))
+
+            if args.delay and len(services) < len(service_hashes):
+                log.info(f"Pausing {args.delay}s for per-record delay...")
+                time.sleep(args.delay)
+
+    #### OUTPUT
+    log.info("Forming output...")
+    sorted_services = sorted(services, key=lambda x: (x.project, x.service, x.service_name))
+
+    tbl = [[] for _ in Service.headers()]
+    jsonout = []
+
+    # had trouble consuming this list more than once... ugly but whatever
+    for c in sorted_services:
+        # this table generator gist is column-oriented
+        if args.table:
+            [tbl[i].append(str(v)) for (i,v) in enumerate(c.as_table_row)]
+        if args.json:
+            jsonout.append(c.as_output_dict(args.json_timestamps))
+
+    if args.table:
+        tbl_str = format_table(
+            tbl,
+            headers=Service.headers(),
+            max_width=args.table_max_width,
+        )
+
+        if args.table == STDOUT:
+            log.debug("Writing table to STDOUT")
+            print(tbl_str)
+        else:
+            log.debug("Writing table to %s" % args.table)
+            with open(args.table, 'w') as f:
+                f.write(tbl_str)
+    else:
+        log.debug("Skipping table output")
+
+    if args.json:
+        json_strs = [json.dumps(s) for s in jsonout]
+
+        if args.json == STDOUT:
+            log.debug("Writing json to STDOUT")
+            [print(s) for s in json_strs]
+        else:
+            log.debug("Writing json to %s" % args.json)
+            with open(args.json, 'w') as f:
+                [f.write(s) for s in json_strs]
+    else:
+        log.debug("Skipping json output")
+
+    log.info("Done.")
+

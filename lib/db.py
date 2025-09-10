@@ -22,6 +22,7 @@ class DbData:
 @dataclass
 class CheckStatus:
     id: int
+    value_id: int
     host: str
     key: str
     value: str
@@ -73,7 +74,7 @@ def set_values(data: List[DbData]):
 
     for d in data:
         cur.execute(
-            f"CALL monitoring.monitoring.set_value(%s, %s, %s, %s, %s)",
+            f"CALL monitoring.monitoring.set_value(%s::varchar, %s::varchar, %s::timestamp, %s::text, %s::text)",
             (d.host, d.key, d.timestamp, d.value, d.extra)
         )
 
@@ -93,22 +94,23 @@ def get_checks():
     for row in cur.fetchall():
         check = CheckStatus(
             id=row[0],
-            host=row[1],
-            key=row[2],
-            value=row[3],
-            extra=row[4],
-            value_timestamp=row[5],
-            value_age=row[6],
-            check=row[7],
-            arguments=row[8],
-            patience=row[9],
-            fail_message=row[10],
-            repeat=row[11],
-            is_good=row[12],
-            check_status_since=row[13],
-            check_message=row[14],
-            last_check=row[15],
-            last_mail=row[16]
+            value_id=row[1],
+            host=row[2],
+            key=row[3],
+            value=row[4],
+            extra=row[5],
+            value_timestamp=row[6],
+            value_age=row[7],
+            check=row[8],
+            arguments=row[9],
+            patience=row[10],
+            fail_message=row[11],
+            repeat=row[12],
+            is_good=row[13],
+            check_status_since=row[14],
+            check_message=row[15],
+            last_check=row[16],
+            last_mail=row[17]
         )
         checks.append(check)
 
