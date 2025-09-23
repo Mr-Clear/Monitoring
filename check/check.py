@@ -50,13 +50,13 @@ def set_status(check: db.CheckStatus, is_good: bool, actual):
                                         repeat=check.repeat,
                                         is_good=check.is_good,
                                         check_status_since=check.check_status_since,
-                                        check_status_since_duration=now-check.check_status_since if check.check_status_since else None, 
+                                        check_status_since_duration=now-check.check_status_since if check.check_status_since else None,
                                         check_message=check.check_message,
                                         last_check=check.last_check,
                                         last_mail=check.last_mail
                                         ) \
         if not is_good and check.fail_message else None
-    
+
     if send_mail:
         last_mail = now
         send_email(f'"{check.host} {check.key} {check.check} {check.arguments}"', message, str(check))
@@ -143,12 +143,12 @@ def disk_space(check: db.CheckStatus):
                 print(f"Value has no byte size: '{check.value}'", file=sys.stderr)
                 send_email('Monitoring Engine', f'Value has no byte size: "{check.check}"', str(check))
                 return
-            
+
             if binary:
                 number = number * 1024 ** 'BKMGT'.index(prefix)
             else:
                 number = number * 1000 ** 'BKMGT'.index(prefix)
-            
+
 
             match (value_name):
                 case 'free':
@@ -161,7 +161,7 @@ def disk_space(check: db.CheckStatus):
                     print(f"Unknown value name: '{value_name}'", file=sys.stderr)
                     send_email('Monitoring Engine', f'Unknown value name: "{value_name}"', str(check))
                     return
-    
+
     set_and_check_status(check, operator, actual, number)
 
 def loadavg(check: db.CheckStatus):

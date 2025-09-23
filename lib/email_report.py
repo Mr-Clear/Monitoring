@@ -2,6 +2,7 @@
 
 import smtplib
 
+from datetime import datetime
 from email.mime.text import MIMEText
 import configparser
 
@@ -12,6 +13,7 @@ _path = os.path.dirname(os.path.realpath(__file__))
 def send_email(sender: str, subject: str, message: str):
     msg = MIMEText(message)
     msg['Subject'] = subject
+    msg['Date'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
 
     config = configparser.ConfigParser()
     config.read(f'{_path}/mailconfig.ini')
@@ -26,4 +28,4 @@ def send_email(sender: str, subject: str, message: str):
         server.sendmail(msg['From'], msg['To'], msg.as_string())
     
 if __name__ == '__main__':
-    send_email('Tester', 'Mail Test', 'Test Content')
+    send_email('Tester', 'Mäil Test', 'Test Content\nHeitzölrückstoßabdämpfung\n\nENDE')
