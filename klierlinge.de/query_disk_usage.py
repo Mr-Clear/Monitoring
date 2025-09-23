@@ -8,5 +8,5 @@ sys.path.append(parent_dir_name + "/lib")
 import get_disk_usage
 from db import set_values
 
-ussage = get_disk_usage.query_disk_usage({'www.klierlinge.de': ['/', '/media/storage'], 'mail.klierlinge.de': ['/', '/mnt/HC_Volume_16021708']})
+ussage = get_disk_usage.query_disk_usage({'www.klierlinge.de': ['/', '/media/storage', '/media/backups'], 'mail.klierlinge.de': ['/', '/mnt/HC_Volume_16021708']})
 set_values(ussage)
