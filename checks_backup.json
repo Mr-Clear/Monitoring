@@ -1,0 +1,2150 @@
+{
+    "value_definitions": [
+        {
+            "id": 0,
+            "host": "",
+            "key": ""
+        },
+        {
+            "id": 20,
+            "host": "www.klierlinge.de",
+            "key": "Disk:/"
+        },
+        {
+            "id": 21,
+            "host": "www.klierlinge.de",
+            "key": "Disk:/media/storage"
+        },
+        {
+            "id": 22,
+            "host": "mail.klierlinge.de",
+            "key": "Disk:/"
+        },
+        {
+            "id": 23,
+            "host": "mail.klierlinge.de",
+            "key": "Disk:/mnt/HC_Volume_16021708"
+        },
+        {
+            "id": 48,
+            "host": "www.klierlinge.de",
+            "key": "loadavg"
+        },
+        {
+            "id": 49,
+            "host": "mail.klierlinge.de",
+            "key": "loadavg"
+        },
+        {
+            "id": 3442,
+            "host": "dionysos",
+            "key": "Disk:/"
+        },
+        {
+            "id": 3443,
+            "host": "dionysos",
+            "key": "Disk:/mnt/disk/SSD"
+        },
+        {
+            "id": 3444,
+            "host": "dionysos",
+            "key": "Disk:/home"
+        },
+        {
+            "id": 3445,
+            "host": "dionysos",
+            "key": "Disk:/mnt/disk/Daten"
+        },
+        {
+            "id": 3446,
+            "host": "dionysos",
+            "key": "Disk:/mnt/disk/Windows10"
+        },
+        {
+            "id": 3447,
+            "host": "dionysos",
+            "key": "Disk:/mnt/disk/Vera"
+        },
+        {
+            "id": 3448,
+            "host": "dionysos",
+            "key": "loadavg"
+        },
+        {
+            "id": 3458,
+            "host": "dionysos",
+            "key": "outdated_packages"
+        },
+        {
+            "id": 3459,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/Duration"
+        },
+        {
+            "id": 3460,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/Hum1"
+        },
+        {
+            "id": 3461,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/PressSL"
+        },
+        {
+            "id": 3462,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/Temp1"
+        },
+        {
+            "id": 3463,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/TempBoden"
+        },
+        {
+            "id": 3464,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/TempIntern1"
+        },
+        {
+            "id": 3465,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBad/TempIntern2"
+        },
+        {
+            "id": 3466,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/AmbientLight"
+        },
+        {
+            "id": 3467,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/Duration"
+        },
+        {
+            "id": 3468,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/Hum"
+        },
+        {
+            "id": 3469,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/Temp"
+        },
+        {
+            "id": 3470,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/TempBed"
+        },
+        {
+            "id": 3471,
+            "host": "klierlinge.de",
+            "key": "rrd/dataBedroom/TempIntern"
+        },
+        {
+            "id": 3472,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/Duration"
+        },
+        {
+            "id": 3473,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/InHum"
+        },
+        {
+            "id": 3474,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/InTemp"
+        },
+        {
+            "id": 3475,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/InTemp2"
+        },
+        {
+            "id": 3476,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/InTemp3"
+        },
+        {
+            "id": 3477,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/InternTemp"
+        },
+        {
+            "id": 3478,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/OutHum"
+        },
+        {
+            "id": 3479,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/OutTemp"
+        },
+        {
+            "id": 3480,
+            "host": "klierlinge.de",
+            "key": "rrd/dataKeller/OutTemp2"
+        },
+        {
+            "id": 3481,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/Duration"
+        },
+        {
+            "id": 3482,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/Hum1"
+        },
+        {
+            "id": 3483,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/Temp1"
+        },
+        {
+            "id": 3484,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/TempBoden"
+        },
+        {
+            "id": 3485,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/TempFenster"
+        },
+        {
+            "id": 3486,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/TempIntern"
+        },
+        {
+            "id": 3487,
+            "host": "klierlinge.de",
+            "key": "rrd/dataK\u00fcche/TempKuhlschrank"
+        },
+        {
+            "id": 3488,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/Duration"
+        },
+        {
+            "id": 3489,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/Hum"
+        },
+        {
+            "id": 3490,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/Press"
+        },
+        {
+            "id": 3491,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/Temp"
+        },
+        {
+            "id": 3492,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/TempDoor"
+        },
+        {
+            "id": 3493,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/TempIntern"
+        },
+        {
+            "id": 3494,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/TempRadiator"
+        },
+        {
+            "id": 3495,
+            "host": "klierlinge.de",
+            "key": "rrd/dataOffice/TempWindow"
+        },
+        {
+            "id": 3496,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Active"
+        },
+        {
+            "id": 3497,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Active_anon"
+        },
+        {
+            "id": 3498,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Active_file"
+        },
+        {
+            "id": 3499,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/AnonHugePages"
+        },
+        {
+            "id": 3500,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/AnonPages"
+        },
+        {
+            "id": 3501,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Bounce"
+        },
+        {
+            "id": 3502,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Buffers"
+        },
+        {
+            "id": 3503,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Cached"
+        },
+        {
+            "id": 3504,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/CmaFree"
+        },
+        {
+            "id": 3505,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/CmaTotal"
+        },
+        {
+            "id": 3506,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/CommitLimit"
+        },
+        {
+            "id": 3507,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Committed_AS"
+        },
+        {
+            "id": 3508,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/DirectMap1G"
+        },
+        {
+            "id": 3509,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/DirectMap2M"
+        },
+        {
+            "id": 3510,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/DirectMap4k"
+        },
+        {
+            "id": 3511,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Dirty"
+        },
+        {
+            "id": 3512,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/FileHugePages"
+        },
+        {
+            "id": 3513,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/FilePmdMapped"
+        },
+        {
+            "id": 3514,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/HardwareCorrupted"
+        },
+        {
+            "id": 3515,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/HugePages_Free"
+        },
+        {
+            "id": 3516,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/HugePages_Rsvd"
+        },
+        {
+            "id": 3517,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/HugePages_Surp"
+        },
+        {
+            "id": 3518,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/HugePages_Total"
+        },
+        {
+            "id": 3519,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Hugepagesize"
+        },
+        {
+            "id": 3520,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Hugetlb"
+        },
+        {
+            "id": 3521,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Inactive"
+        },
+        {
+            "id": 3522,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Inactive_anon"
+        },
+        {
+            "id": 3523,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Inactive_file"
+        },
+        {
+            "id": 3524,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/KReclaimable"
+        },
+        {
+            "id": 3525,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/KernelStack"
+        },
+        {
+            "id": 3526,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Mapped"
+        },
+        {
+            "id": 3527,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/MemAvailable"
+        },
+        {
+            "id": 3528,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/MemFree"
+        },
+        {
+            "id": 3529,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/MemTotal"
+        },
+        {
+            "id": 3530,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Mlocked"
+        },
+        {
+            "id": 3531,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/NFS_Unstable"
+        },
+        {
+            "id": 3532,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/PageTables"
+        },
+        {
+            "id": 3533,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Percpu"
+        },
+        {
+            "id": 3534,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SReclaimable"
+        },
+        {
+            "id": 3535,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SUnreclaim"
+        },
+        {
+            "id": 3536,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SecPageTables"
+        },
+        {
+            "id": 3537,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Shmem"
+        },
+        {
+            "id": 3538,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/ShmemHugePages"
+        },
+        {
+            "id": 3539,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/ShmemPmdMapped"
+        },
+        {
+            "id": 3540,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Slab"
+        },
+        {
+            "id": 3541,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SwapCached"
+        },
+        {
+            "id": 3542,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SwapFree"
+        },
+        {
+            "id": 3543,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/SwapTotal"
+        },
+        {
+            "id": 3544,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Unaccepted"
+        },
+        {
+            "id": 3545,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Unevictable"
+        },
+        {
+            "id": 3546,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/VmallocChunk"
+        },
+        {
+            "id": 3547,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/VmallocTotal"
+        },
+        {
+            "id": 3548,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/VmallocUsed"
+        },
+        {
+            "id": 3549,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Writeback"
+        },
+        {
+            "id": 3550,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/WritebackTmp"
+        },
+        {
+            "id": 3551,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Zswap"
+        },
+        {
+            "id": 3552,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Zswapped"
+        },
+        {
+            "id": 3553,
+            "host": "klierlinge.de",
+            "key": "rrd/fritzbox/BytesReceived"
+        },
+        {
+            "id": 3554,
+            "host": "klierlinge.de",
+            "key": "rrd/fritzbox/BytesSent"
+        },
+        {
+            "id": 3555,
+            "host": "klierlinge.de",
+            "key": "rrd/fritzbox/LanHosts"
+        },
+        {
+            "id": 3556,
+            "host": "klierlinge.de",
+            "key": "rrd/fritzbox/WifiHosts"
+        },
+        {
+            "id": 3557,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Brother"
+        },
+        {
+            "id": 3558,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Dionysos4"
+        },
+        {
+            "id": 3559,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Dionysos6"
+        },
+        {
+            "id": 3560,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/FritzBox"
+        },
+        {
+            "id": 3561,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Hop1"
+        },
+        {
+            "id": 3562,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Hop2"
+        },
+        {
+            "id": 3563,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/Pixel6a"
+        },
+        {
+            "id": 3564,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/VarianLaptop"
+        },
+        {
+            "id": 3565,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/iPhone"
+        },
+        {
+            "id": 3566,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/klierlinge_de4"
+        },
+        {
+            "id": 3567,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/klierlinge_de6"
+        },
+        {
+            "id": 3568,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/mail_klierlinge_de4"
+        },
+        {
+            "id": 3569,
+            "host": "klierlinge.de",
+            "key": "rrd/ping/mail_klierlinge_de6"
+        },
+        {
+            "id": 3570,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/AtmGegenstr"
+        },
+        {
+            "id": 3571,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Bodenwerte10cm"
+        },
+        {
+            "id": 3572,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Bodenwerte20cm"
+        },
+        {
+            "id": 3573,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Bodenwerte2cm"
+        },
+        {
+            "id": 3574,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Bodenwerte50cm"
+        },
+        {
+            "id": 3575,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Bodenwerte5cm"
+        },
+        {
+            "id": 3576,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/DiffuseStr"
+        },
+        {
+            "id": 3577,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Feuchttemperatur2m"
+        },
+        {
+            "id": 3578,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Feuchttemperatur30m"
+        },
+        {
+            "id": 3579,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Globalstr"
+        },
+        {
+            "id": 3580,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Luftdruck515m"
+        },
+        {
+            "id": 3581,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/LuftdruckNN"
+        },
+        {
+            "id": 3582,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/NiederschlagArt"
+        },
+        {
+            "id": 3583,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/NiederschlagSumme"
+        },
+        {
+            "id": 3584,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Niederschlagaktuell"
+        },
+        {
+            "id": 3585,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/RelativeFeuchte2m"
+        },
+        {
+            "id": 3586,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/RelativeFeuchte30m"
+        },
+        {
+            "id": 3587,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Sonnenscheindauer"
+        },
+        {
+            "id": 3588,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Taupunkt2m"
+        },
+        {
+            "id": 3589,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Taupunkt30m"
+        },
+        {
+            "id": 3590,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Temperatur2m"
+        },
+        {
+            "id": 3591,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Temperatur30m"
+        },
+        {
+            "id": 3592,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/UVIndex"
+        },
+        {
+            "id": 3593,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Windgeschw30m"
+        },
+        {
+            "id": 3594,
+            "host": "klierlinge.de",
+            "key": "rrd/uni_muenchen_de/Windrichtung30m"
+        },
+        {
+            "id": 3595,
+            "host": "klierlinge.de",
+            "key": "rrd/test/Duration"
+        },
+        {
+            "id": 3596,
+            "host": "klierlinge.de",
+            "key": "rrd/test/InHum"
+        },
+        {
+            "id": 3597,
+            "host": "klierlinge.de",
+            "key": "rrd/test/InTemp"
+        },
+        {
+            "id": 3598,
+            "host": "klierlinge.de",
+            "key": "rrd/test/InTemp2"
+        },
+        {
+            "id": 3599,
+            "host": "klierlinge.de",
+            "key": "rrd/test/InTemp3"
+        },
+        {
+            "id": 3600,
+            "host": "klierlinge.de",
+            "key": "rrd/test/InternTemp"
+        },
+        {
+            "id": 3601,
+            "host": "klierlinge.de",
+            "key": "rrd/test/OutHum"
+        },
+        {
+            "id": 3602,
+            "host": "klierlinge.de",
+            "key": "rrd/test/OutTemp"
+        },
+        {
+            "id": 3603,
+            "host": "klierlinge.de",
+            "key": "rrd/test/OutTemp2"
+        },
+        {
+            "id": 3604,
+            "host": "klierlinge.de",
+            "key": "rrd/test/Lux"
+        },
+        {
+            "id": 3605,
+            "host": "klierlinge.de",
+            "key": "rrd/test/PlugTemp"
+        },
+        {
+            "id": 3606,
+            "host": "hompi",
+            "key": "outdated_packages"
+        },
+        {
+            "id": 3607,
+            "host": "homepi",
+            "key": "Disk:/"
+        },
+        {
+            "id": 3608,
+            "host": "homepi",
+            "key": "Disk:/mnt/ssd"
+        },
+        {
+            "id": 3609,
+            "host": "homepi",
+            "key": "Disk:/mnt/External2TB"
+        },
+        {
+            "id": 3610,
+            "host": "homepi",
+            "key": "loadavg"
+        },
+        {
+            "id": 3611,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Active"
+        },
+        {
+            "id": 3612,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Active_anon"
+        },
+        {
+            "id": 3613,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Active_file"
+        },
+        {
+            "id": 3614,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/AnonHugePages"
+        },
+        {
+            "id": 3615,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/AnonPages"
+        },
+        {
+            "id": 3616,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Bounce"
+        },
+        {
+            "id": 3617,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Buffers"
+        },
+        {
+            "id": 3618,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Cached"
+        },
+        {
+            "id": 3619,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/CmaFree"
+        },
+        {
+            "id": 3620,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/CmaTotal"
+        },
+        {
+            "id": 3621,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/CommitLimit"
+        },
+        {
+            "id": 3622,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Committed_AS"
+        },
+        {
+            "id": 3623,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/DirectMap1G"
+        },
+        {
+            "id": 3624,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/DirectMap2M"
+        },
+        {
+            "id": 3625,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/DirectMap4k"
+        },
+        {
+            "id": 3626,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Dirty"
+        },
+        {
+            "id": 3627,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Ext_free"
+        },
+        {
+            "id": 3628,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Ext_usage"
+        },
+        {
+            "id": 3629,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/FileHugePages"
+        },
+        {
+            "id": 3630,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/FilePmdMapped"
+        },
+        {
+            "id": 3631,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/HardwareCorrupted"
+        },
+        {
+            "id": 3632,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/HugePages_Free"
+        },
+        {
+            "id": 3633,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/HugePages_Rsvd"
+        },
+        {
+            "id": 3634,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/HugePages_Surp"
+        },
+        {
+            "id": 3635,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/HugePages_Total"
+        },
+        {
+            "id": 3636,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Hugepagesize"
+        },
+        {
+            "id": 3637,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Hugetlb"
+        },
+        {
+            "id": 3638,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Inactive"
+        },
+        {
+            "id": 3639,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Inactive_anon"
+        },
+        {
+            "id": 3640,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Inactive_file"
+        },
+        {
+            "id": 3641,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/KReclaimable"
+        },
+        {
+            "id": 3642,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/KernelStack"
+        },
+        {
+            "id": 3643,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Mapped"
+        },
+        {
+            "id": 3644,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/MemAvailable"
+        },
+        {
+            "id": 3645,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/MemFree"
+        },
+        {
+            "id": 3646,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/MemTotal"
+        },
+        {
+            "id": 3647,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Mlocked"
+        },
+        {
+            "id": 3648,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/NFS_Unstable"
+        },
+        {
+            "id": 3649,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/PageTables"
+        },
+        {
+            "id": 3650,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Percpu"
+        },
+        {
+            "id": 3651,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SReclaimable"
+        },
+        {
+            "id": 3652,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SSD_free"
+        },
+        {
+            "id": 3653,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SSD_usage"
+        },
+        {
+            "id": 3654,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SUnreclaim"
+        },
+        {
+            "id": 3655,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SecPageTables"
+        },
+        {
+            "id": 3656,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Shmem"
+        },
+        {
+            "id": 3657,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/ShmemHugePages"
+        },
+        {
+            "id": 3658,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/ShmemPmdMapped"
+        },
+        {
+            "id": 3659,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Slab"
+        },
+        {
+            "id": 3660,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SwapCached"
+        },
+        {
+            "id": 3661,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SwapFree"
+        },
+        {
+            "id": 3662,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/SwapTotal"
+        },
+        {
+            "id": 3663,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Unaccepted"
+        },
+        {
+            "id": 3664,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Unevictable"
+        },
+        {
+            "id": 3665,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/VmallocChunk"
+        },
+        {
+            "id": 3666,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/VmallocTotal"
+        },
+        {
+            "id": 3667,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/VmallocUsed"
+        },
+        {
+            "id": 3668,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Writeback"
+        },
+        {
+            "id": 3669,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/WritebackTmp"
+        },
+        {
+            "id": 3670,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Zswap"
+        },
+        {
+            "id": 3671,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/Zswapped"
+        },
+        {
+            "id": 3672,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/loadavg1"
+        },
+        {
+            "id": 3673,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/root_free"
+        },
+        {
+            "id": 3674,
+            "host": "klierlinge.de",
+            "key": "rrd/homepi/root_usage"
+        },
+        {
+            "id": 3675,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Active"
+        },
+        {
+            "id": 3676,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Active_anon"
+        },
+        {
+            "id": 3677,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Active_file"
+        },
+        {
+            "id": 3678,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/AnonHugePages"
+        },
+        {
+            "id": 3679,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/AnonPages"
+        },
+        {
+            "id": 3680,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Bounce"
+        },
+        {
+            "id": 3681,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Buffers"
+        },
+        {
+            "id": 3682,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Cached"
+        },
+        {
+            "id": 3683,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/CmaFree"
+        },
+        {
+            "id": 3684,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/CmaTotal"
+        },
+        {
+            "id": 3685,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/CommitLimit"
+        },
+        {
+            "id": 3686,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Committed_AS"
+        },
+        {
+            "id": 3687,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/DirectMap1G"
+        },
+        {
+            "id": 3688,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/DirectMap2M"
+        },
+        {
+            "id": 3689,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/DirectMap4k"
+        },
+        {
+            "id": 3690,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Dirty"
+        },
+        {
+            "id": 3691,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/FileHugePages"
+        },
+        {
+            "id": 3692,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/FilePmdMapped"
+        },
+        {
+            "id": 3693,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/HardwareCorrupted"
+        },
+        {
+            "id": 3694,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/HugePages_Free"
+        },
+        {
+            "id": 3695,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/HugePages_Rsvd"
+        },
+        {
+            "id": 3696,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/HugePages_Surp"
+        },
+        {
+            "id": 3697,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/HugePages_Total"
+        },
+        {
+            "id": 3698,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Hugepagesize"
+        },
+        {
+            "id": 3699,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Hugetlb"
+        },
+        {
+            "id": 3700,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Inactive"
+        },
+        {
+            "id": 3701,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Inactive_anon"
+        },
+        {
+            "id": 3702,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Inactive_file"
+        },
+        {
+            "id": 3703,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/KReclaimable"
+        },
+        {
+            "id": 3704,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/KernelStack"
+        },
+        {
+            "id": 3705,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Mapped"
+        },
+        {
+            "id": 3706,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/MemAvailable"
+        },
+        {
+            "id": 3707,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/MemFree"
+        },
+        {
+            "id": 3708,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/MemTotal"
+        },
+        {
+            "id": 3709,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Mlocked"
+        },
+        {
+            "id": 3710,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/NFS_Unstable"
+        },
+        {
+            "id": 3711,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/PageTables"
+        },
+        {
+            "id": 3712,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Percpu"
+        },
+        {
+            "id": 3713,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SReclaimable"
+        },
+        {
+            "id": 3714,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SUnreclaim"
+        },
+        {
+            "id": 3715,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SecPageTables"
+        },
+        {
+            "id": 3716,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Shmem"
+        },
+        {
+            "id": 3717,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/ShmemHugePages"
+        },
+        {
+            "id": 3718,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/ShmemPmdMapped"
+        },
+        {
+            "id": 3719,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Slab"
+        },
+        {
+            "id": 3720,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SwapCached"
+        },
+        {
+            "id": 3721,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SwapFree"
+        },
+        {
+            "id": 3722,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/SwapTotal"
+        },
+        {
+            "id": 3723,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Unaccepted"
+        },
+        {
+            "id": 3724,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Unevictable"
+        },
+        {
+            "id": 3725,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/VmallocChunk"
+        },
+        {
+            "id": 3726,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/VmallocTotal"
+        },
+        {
+            "id": 3727,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/VmallocUsed"
+        },
+        {
+            "id": 3728,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Writeback"
+        },
+        {
+            "id": 3729,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/WritebackTmp"
+        },
+        {
+            "id": 3730,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Zswap"
+        },
+        {
+            "id": 3731,
+            "host": "klierlinge.de",
+            "key": "rrd/xdionysos_meminfo/Zswapped"
+        },
+        {
+            "id": 3732,
+            "host": "klierlinge.de",
+            "key": "rrd/edge/Bat"
+        },
+        {
+            "id": 3733,
+            "host": "klierlinge.de",
+            "key": "rrd/edge/BatTemp"
+        },
+        {
+            "id": 3734,
+            "host": "klierlinge.de",
+            "key": "rrd/edge/Light"
+        },
+        {
+            "id": 3735,
+            "host": "klierlinge.de",
+            "key": "rrd/edge/Source"
+        },
+        {
+            "id": 3736,
+            "host": "klierlinge.de",
+            "key": "rrd/dionysos_meminfo/Balloon"
+        },
+        {
+            "id": 3737,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR1_Current"
+        },
+        {
+            "id": 3738,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR1_Energy"
+        },
+        {
+            "id": 3739,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR1_Power"
+        },
+        {
+            "id": 3740,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR1_Voltage"
+        },
+        {
+            "id": 3741,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR2_Current"
+        },
+        {
+            "id": 3742,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR2_Energy"
+        },
+        {
+            "id": 3743,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR2_Power"
+        },
+        {
+            "id": 3744,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR2_Voltage"
+        },
+        {
+            "id": 3745,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR3_Current"
+        },
+        {
+            "id": 3746,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR3_Energy"
+        },
+        {
+            "id": 3747,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR3_Power"
+        },
+        {
+            "id": 3748,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR3_Voltage"
+        },
+        {
+            "id": 3749,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR4_Current"
+        },
+        {
+            "id": 3750,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR4_Energy"
+        },
+        {
+            "id": 3751,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR4_Power"
+        },
+        {
+            "id": 3752,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/PWR4_Voltage"
+        },
+        {
+            "id": 3753,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/Temp1"
+        },
+        {
+            "id": 3754,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/Temp2"
+        },
+        {
+            "id": 3755,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB1_Current"
+        },
+        {
+            "id": 3756,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB1_Energy"
+        },
+        {
+            "id": 3757,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB1_Power"
+        },
+        {
+            "id": 3758,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB1_Voltage"
+        },
+        {
+            "id": 3759,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB2_Current"
+        },
+        {
+            "id": 3760,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB2_Energy"
+        },
+        {
+            "id": 3761,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB2_Power"
+        },
+        {
+            "id": 3762,
+            "host": "klierlinge.de",
+            "key": "rrd/DesktopPower/USB2_Voltage"
+        },
+        {
+            "id": 3763,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR1_Current"
+        },
+        {
+            "id": 3764,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR1_Energy"
+        },
+        {
+            "id": 3765,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR1_Power"
+        },
+        {
+            "id": 3766,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR1_Voltage"
+        },
+        {
+            "id": 3767,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR2_Current"
+        },
+        {
+            "id": 3768,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR2_Energy"
+        },
+        {
+            "id": 3769,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR2_Power"
+        },
+        {
+            "id": 3770,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR2_Voltage"
+        },
+        {
+            "id": 3771,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR3_Current"
+        },
+        {
+            "id": 3772,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR3_Energy"
+        },
+        {
+            "id": 3773,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR3_Power"
+        },
+        {
+            "id": 3774,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR3_Voltage"
+        },
+        {
+            "id": 3775,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR4_Current"
+        },
+        {
+            "id": 3776,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR4_Energy"
+        },
+        {
+            "id": 3777,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR4_Power"
+        },
+        {
+            "id": 3778,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/PWR4_Voltage"
+        },
+        {
+            "id": 3779,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/Temp1"
+        },
+        {
+            "id": 3780,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/Temp2"
+        },
+        {
+            "id": 3781,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB1_Current"
+        },
+        {
+            "id": 3782,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB1_Energy"
+        },
+        {
+            "id": 3783,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB1_Power"
+        },
+        {
+            "id": 3784,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB1_Voltage"
+        },
+        {
+            "id": 3785,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB2_Current"
+        },
+        {
+            "id": 3786,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB2_Energy"
+        },
+        {
+            "id": 3787,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB2_Power"
+        },
+        {
+            "id": 3788,
+            "host": "klierlinge.de",
+            "key": "rrd/desktop_power/USB2_Voltage"
+        },
+        {
+            "id": 3789,
+            "host": "www.klierlinge.de",
+            "key": "Disk:/media/backups"
+        },
+        {
+            "id": 3790,
+            "host": "www.klierlinge.de",
+            "key": "http_status"
+        },
+        {
+            "id": 3791,
+            "host": "www.klierlinge.de",
+            "key": "certificate_days_remaining"
+        },
+        {
+            "id": 3792,
+            "host": "nextcloud.klierlinge.de",
+            "key": "http_status"
+        },
+        {
+            "id": 3793,
+            "host": "nextcloud.klierlinge.de",
+            "key": "certificate_days_remaining"
+        },
+        {
+            "id": 3794,
+            "host": "mail.klierlinge.de",
+            "key": "http_status"
+        },
+        {
+            "id": 3795,
+            "host": "mail.klierlinge.de",
+            "key": "certificate_days_remaining"
+        },
+        {
+            "id": 3796,
+            "host": "klierlinge.de",
+            "key": "http_status"
+        }
+    ],
+    "checks": [
+        {
+            "id": 0,
+            "value_id": 0,
+            "check": "",
+            "arguments": null,
+            "patience": "00:00:00",
+            "fail_message": "Last Check",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 3,
+            "value_id": 3442,
+            "check": "disk_space",
+            "arguments": "usage < 80%",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] Dionysos '/' is {actual} % full.",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 5,
+            "value_id": 3442,
+            "check": "disk_space",
+            "arguments": "usage > 10%",
+            "patience": "01:00:00",
+            "fail_message": "[Error] Dionysos '/' nearly empty",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 6,
+            "value_id": 3458,
+            "check": "value_age",
+            "arguments": "<= 1h",
+            "patience": "1 days 00:00:00",
+            "fail_message": "[Warning] Dionysos not reported for {value_age}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 7,
+            "value_id": 3442,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "01:00:00",
+            "fail_message": "[Error] Dionysos '/' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 10,
+            "value_id": 3458,
+            "check": "number",
+            "arguments": "= 0",
+            "patience": "7 days 00:00:00",
+            "fail_message": "[Warning] {host} has {value} outdated packages since {check_status_since_duration}",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 11,
+            "value_id": 20,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] klierlinge.de '/' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 12,
+            "value_id": 20,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "01:00:00",
+            "fail_message": "[Error] klierlinge.de '/' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 13,
+            "value_id": 21,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] klierlinge.de storage is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 14,
+            "value_id": 21,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "01:00:00",
+            "fail_message": "[Error] klierlinge.de storage full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 15,
+            "value_id": 22,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] mail.klierlinge.de '/' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 16,
+            "value_id": 22,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "01:00:00",
+            "fail_message": "[Error] mail.klierlinge.de '/' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 17,
+            "value_id": 23,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] mail.klierlinge.de Volume is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 18,
+            "value_id": 23,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "01:00:00",
+            "fail_message": "[Error] mail.klierlinge.de Volume full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 19,
+            "value_id": 3443,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] dionysos '/mnt/disk/SSD' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 20,
+            "value_id": 3445,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] dionysos '/mnt/disk/Daten' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 21,
+            "value_id": 3447,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] dionysos '/mnt/disk/Vera' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 22,
+            "value_id": 3444,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] dionysos '/home' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 23,
+            "value_id": 3443,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "00:10:00",
+            "fail_message": "[Error] dionysos '/mnt/disk/SSD' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 24,
+            "value_id": 3445,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "00:10:00",
+            "fail_message": "[Error] dionysos '/mnt/disk/Daten' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 25,
+            "value_id": 3447,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "00:10:00",
+            "fail_message": "[Error] dionysos '/mnt/disk/Vera' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 26,
+            "value_id": 3444,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "00:10:00",
+            "fail_message": "[Error] dionysos '/home' full",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 27,
+            "value_id": 48,
+            "check": "loadavg",
+            "arguments": "15min < 5",
+            "patience": "00:00:00",
+            "fail_message": "[Error] klierlinge.de is over loaded: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 28,
+            "value_id": 48,
+            "check": "loadavg",
+            "arguments": "15min < 4",
+            "patience": "00:00:00",
+            "fail_message": "[Warning] klierlinge.de has high load: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 29,
+            "value_id": 3464,
+            "check": "value_age",
+            "arguments": "< 15m",
+            "patience": "00:01:30",
+            "fail_message": "[Error] ESP32 {key} did not report for {value_age}!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 30,
+            "value_id": 3471,
+            "check": "value_age",
+            "arguments": "< 15m",
+            "patience": "00:01:30",
+            "fail_message": "[Error] ESP32 {key} did not report for {value_age}!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 31,
+            "value_id": 3477,
+            "check": "value_age",
+            "arguments": "< 15m",
+            "patience": "00:01:30",
+            "fail_message": "[Error] ESP32 {key} did not report for {value_age}!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 32,
+            "value_id": 3486,
+            "check": "value_age",
+            "arguments": "< 15m",
+            "patience": "00:01:30",
+            "fail_message": "[Error] ESP32 {key} did not report for {value_age}!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 33,
+            "value_id": 3493,
+            "check": "value_age",
+            "arguments": "< 15m",
+            "patience": "00:01:30",
+            "fail_message": "[Error] ESP32 {key} did not report for {value_age}!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 34,
+            "value_id": 3610,
+            "check": "loadavg",
+            "arguments": "15min < 2.5",
+            "patience": "00:01:00",
+            "fail_message": "[Warning] homepi has high load: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 35,
+            "value_id": 3607,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] homepi '/' is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 36,
+            "value_id": 3608,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] homepi SSD is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 37,
+            "value_id": 3609,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] homepi External2TB is {actual} % full.",
+            "repeat": "7 days 00:00:00"
+        },
+        {
+            "id": 38,
+            "value_id": 3789,
+            "check": "disk_space",
+            "arguments": "usage < 80 %",
+            "patience": "01:00:00",
+            "fail_message": "[Warning] klierlinge.de '/media/backups' is {sctual} % full.",
+            "repeat": "2 days 00:00:00"
+        },
+        {
+            "id": 40,
+            "value_id": 3789,
+            "check": "disk_space",
+            "arguments": "usage < 95 %",
+            "patience": "10:00:00",
+            "fail_message": "[Error] mail.klierlinge.de '/media/backups' full!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 42,
+            "value_id": 3790,
+            "check": "number",
+            "arguments": "= 200",
+            "patience": "21:00:00",
+            "fail_message": "[Error] HTTP status of {host} failed: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 43,
+            "value_id": 3790,
+            "check": "value_age",
+            "arguments": "< 11m",
+            "patience": "10:00:00",
+            "fail_message": "[Error] HTTP status of {host} not checked for {value_age}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 44,
+            "value_id": 3791,
+            "check": "number",
+            "arguments": "> 10",
+            "patience": "1 days 00:00:00",
+            "fail_message": "[Warning] Certificate of {host} expires in {actual} days!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 45,
+            "value_id": 3792,
+            "check": "number",
+            "arguments": "= 200",
+            "patience": "21:00:00",
+            "fail_message": "[Error] HTTP status of {host} failed: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 46,
+            "value_id": 3793,
+            "check": "number",
+            "arguments": "> 10",
+            "patience": "1 days 00:00:00",
+            "fail_message": "[Warning] Certificate of {host} expires in {actual} days!",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 47,
+            "value_id": 3794,
+            "check": "number",
+            "arguments": "= 200",
+            "patience": "21:00:00",
+            "fail_message": "[Error] HTTP status of {host} failed: {actual}",
+            "repeat": "1 days 00:00:00"
+        },
+        {
+            "id": 48,
+            "value_id": 3795,
+            "check": "number",
+            "arguments": "> 10",
+            "patience": "1 days 00:00:00",
+            "fail_message": "[Warning] Certificate of {host} expires in {actual} days!",
+            "repeat": "1 days 00:00:00"
+        }
+    ],
+    "timestamp": "2025-09-25 10:29:03"
+}

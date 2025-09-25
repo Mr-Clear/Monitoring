@@ -8,6 +8,7 @@ import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import List
+import subprocess
 
 _checks_buffer = {}
 
@@ -142,3 +143,21 @@ def set_check_status(check_id: int, last_check: datetime, is_good: bool, status_
     conn.commit()
     cur.close()
     conn.close()
+
+def get_backup() -> dict[str, list[dict[str, str | int | None]]]:
+    conn = _connect()
+    cur = conn.cursor()
+
+    cur.execute("select * from monitoring.value_definition order by id")
+    value_definitions = []
+    columns = [desc[0] for desc in cur.description]
+    for row in cur.fetchall():
+        value_definitions.append({columns[i]: row[i] for i in range(len(columns))})
+    cur.execute("select * from monitoring.checks order by id")
+    checks = []
+    columns = [desc[0] for desc in cur.description]
+    for row in cur.fetchall():
+        checks.append({columns[i]: row[i] for i in range(len(columns))})
+    cur.close()
+    conn.close()
+    return {'value_definitions': value_definitions, 'checks': checks}
