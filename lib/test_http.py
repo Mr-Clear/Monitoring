@@ -4,13 +4,6 @@ from datetime import datetime
 import urllib3.exceptions
 
 from db import DbData
-#@dataclass
-#class DbData:
-#    host: str
-#    key: str
-#    value: str | None
-#    extra: str | None = None
-#    timestamp: datetime | None = None
 
 def test_http(url: str) -> list[DbData]:
     host = url.split('/')[2]
