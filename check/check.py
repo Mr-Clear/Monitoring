@@ -210,7 +210,7 @@ def number(check: db.CheckStatus):
         send_email('Monitoring Engine', f'Invalid value for number check: "{check.check}"', str(check))
         return
 
-    set_and_check_status(check, match[1], check.value, float(match[2]))
+    set_and_check_status(check, match[1], float(check.value), float(match[2]))
 
 def value_age(check: db.CheckStatus):
     regex = re.compile(r'^(!?[<>]?=?) ((\d+)y)?((\d+)M)?((\d+)w)?((\d+)d)?((\d+)h)?((\d+)m)?((\d+)s)?$')
